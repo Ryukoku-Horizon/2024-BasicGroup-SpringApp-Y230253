@@ -131,6 +131,7 @@ def home_view(page: ft.Page):
                 controls=[
                     background,
                     ft.Container(
+                        expand=True,
                         width=page.window_width,
                         height=page.window_height,
                         content=content
@@ -181,10 +182,12 @@ def ranking_view(page: ft.Page):
 # --------------------
 # ゲーム画面（既存UI・処理そのまま）
 def main_game(page: ft.Page):
+
     play_sound("click2.mp3")
     page.title = "レジ打ちゲーム"
     page.vertical_alignment = "start"
     page.views.clear()
+    page.scroll = "auto"
 
     lives = 3
     customer_order = fetch_random_orders()
@@ -224,10 +227,12 @@ def main_game(page: ft.Page):
     top_stack = ft.Stack(
         controls=[
             ft.Container(
+                expand=True,
                 alignment=ft.Alignment(-0.4, -0.4),
                 content=top_gif
             ),
             ft.Container(
+                expand=True,
                 alignment=ft.Alignment(-0.3, 1.0),  # 下部に配置
                 content=timer_widget
             )
@@ -260,6 +265,7 @@ def main_game(page: ft.Page):
                 
                 top_stack.controls = [
                     ft.Container(
+                        expand=True,
                         alignment=ft.Alignment(-0.4, -0.4),
                         content=ft.Image(
                             src="assets/gifs/oikari2.gif",
@@ -269,6 +275,7 @@ def main_game(page: ft.Page):
                         )
                     ),
                     ft.Container(
+                        expand=True,
                         alignment=ft.Alignment(0, -0.4),
                         content=ft.Image(
                             src="assets/gifs/killyou.gif",
@@ -314,6 +321,7 @@ def main_game(page: ft.Page):
     # processed_orders 表示用のカラム（白背景）
     order_list = ft.Column(controls=[])
     order_list_container = ft.Container(
+        expand=True,
         bgcolor="white",
         padding=10,
         content=order_list
@@ -325,7 +333,10 @@ def main_game(page: ft.Page):
     # --- order_info 部分の変更 ---
     # order_payment_info コンテナを定義（初期は非表示）
     order_payment_info = ft.Container(
+        expand=True,
+        
         content=ft.Column(
+            #scrall = ft.ScrollMode.ALWAYS,
             controls=[
                 #ft.Text(f"注文合計金額　　　　　{order_sum}円", size=16),
                 ft.Text(f"支払い金額　　　{simulated_payment}円", size=16, color="red")
@@ -335,10 +346,12 @@ def main_game(page: ft.Page):
     )
 
     order_info_content = ft.Column(
+        scroll=ft.ScrollMode.AUTO,
         controls=[
             ft.Text("客側の注文内容", size=20, weight="bold", color="blue"),
             ft.Divider(height=10),
             ft.Column(
+                #scroll=ft.ScrollMode.ALWAYS,
                 controls=[
                     ft.Row(
                         controls=[
@@ -368,11 +381,13 @@ def main_game(page: ft.Page):
                     ft.ElevatedButton("おにぎり", on_click=lambda e: show_category_view("おにぎり")),
                     ft.ElevatedButton("飲み物", on_click=lambda e: show_category_view("飲み物"))
                 ],
+                
                 spacing=10
             )
         ]
     )
     order_info = ft.Container(
+        expand=True,
         bgcolor="white",
         padding=10,
         content=order_info_content
@@ -448,6 +463,7 @@ def main_game(page: ft.Page):
                 image_path = os.path.join("assets", "images", item["image"])
                 controls.append(
                     ft.Container(
+                        expand=True,
                         content=ft.Column(
                             [
                                 ft.Image(src=image_path, width=80, height=80, fit="contain"),
@@ -460,6 +476,7 @@ def main_game(page: ft.Page):
                             ],
                             alignment="center"
                         ),
+                        
                         width=120,
                         padding=5,
                         margin=5,
@@ -504,6 +521,7 @@ def main_game(page: ft.Page):
     # ----- 修正: coin_stack の定義（背景色なし、サイズ固定も指定しない） -----
     coin_stack_controls = []  # コインの画像を格納するリスト
     coin_stack = ft.Container(
+        expand=True,
         alignment=ft.alignment.top_right
     )
     # ----- 追加: お客が怒ったかを判定するフラグ(初期はFalse) -----
@@ -545,6 +563,7 @@ def main_game(page: ft.Page):
             # angry 状態のGIF（oikari2.gif と killyou.gif）を表示
             top_stack.controls = [
                 ft.Container(
+                    expand=True,
                     alignment=ft.Alignment(-0.4, -0.4),
                     content=ft.Image(
                         src="assets/gifs/oikari2.gif",
@@ -554,6 +573,7 @@ def main_game(page: ft.Page):
                     )
                 ),
                 ft.Container(
+                    expand=True,
                     alignment=ft.Alignment(0, -0.4),
                     content=ft.Image(
                         src="assets/gifs/killyou.gif",
@@ -711,6 +731,7 @@ def main_game(page: ft.Page):
 
     calc_button = ft.ElevatedButton("会計", on_click=calculate_change)
     input_info = ft.Column(
+        #scroll = True,
         controls=[
             ft.Text("入力内容", size=20, weight="bold", color="blue"),
             ft.Divider(height=10),
@@ -725,6 +746,7 @@ def main_game(page: ft.Page):
     )
     # 入力情報部分も白背景でラップする
     input_info_container = ft.Container(
+        #expand=True,
         bgcolor="white",
         padding=10,
         content=input_info
@@ -732,6 +754,7 @@ def main_game(page: ft.Page):
 
     # 画面全体の背景を茶色にするため、下部領域を包むコンテナは bgcolor="brown"
     main_content = ft.Container(
+        #expand=True,
         bgcolor="brown",
         padding=10,
         content=ft.Row(
@@ -746,21 +769,46 @@ def main_game(page: ft.Page):
     # 全体を下寄せにするため、Column で包みます
     main_view = ft.View(
         route="/",
+        scroll=ft.ScrollMode.AUTO,
         controls=[
             ft.Stack(
+                expand=True,
                 controls=[
                     # 下部の主要コンテンツ（Column）の配置
                     ft.Column(
                         expand=True,
+                        scroll=ft.ScrollMode.AUTO,
                         alignment=ft.MainAxisAlignment.END,  # 下寄せ
                         controls=[
+                            
                             ft.Container(
-                                expand=True,
+                                expand=False,
                                 alignment=ft.Alignment(-0.4, -0.4),
                                 content=top_stack,
                                 bgcolor=ft.Colors.ORANGE_100
                             ),
-                            main_content
+                            ft.Container(
+                                expand=True,
+                                bgcolor="brown",
+                                padding=10,
+                                content=ft.Row(
+                                    controls=[
+                                        ft.Container(
+                                            content=order_info,
+                                            expand=True,
+                                            padding=10,
+                                            #scroll=ft.ScrollMode.AUTO
+                                        ),
+                                        ft.VerticalDivider(width=1),
+                                        ft.Container(
+                                            content=input_info_container,
+                                            expand=True,
+                                            padding=10,
+                                            #scroll=ft.ScrollMode.AUTO
+                                        )
+                                        ]
+                                )
+                            )
                         ]
                     ),
                     # ライフ表示（左上）
@@ -788,6 +836,7 @@ def main(page: ft.Page):
     page.window_resizable = True
     page.window_min_width = 800
     page.window_min_height = 600
+    page.scroll = "auto"
 
 
     home_view(page)

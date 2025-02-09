@@ -118,7 +118,7 @@ def home_view(page: ft.Page):
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         controls=[
-            ft.Text("レジ打ちゲーム", size=40, weight="bold", color=ft.Colors.WHITE),
+            ft.Text("レジ打ちゲーム", size=40, weight="bold", color=ft.colors.WHITE),
             ft.ElevatedButton("ゲームスタート", on_click=lambda e: main_game(page)),
             ft.ElevatedButton("ランキング", on_click=lambda e: ranking_view(page))
         ]
@@ -758,7 +758,7 @@ def main_game(page: ft.Page):
                                 expand=True,
                                 alignment=ft.Alignment(-0.4, -0.4),
                                 content=top_stack,
-                                bgcolor=ft.Colors.ORANGE_100
+                                bgcolor=ft.colors.ORANGE_100
                             ),
                             main_content
                         ]
@@ -767,7 +767,7 @@ def main_game(page: ft.Page):
                     ft.Container(
                         alignment=ft.alignment.top_left,
                         content=life_container,
-                        bgcolor=ft.Colors.ORANGE_100  # 必要に応じて
+                        bgcolor=ft.colors.ORANGE_100  # 必要に応じて
                     ),
                     # 右上に追加：コイン積み上げ用専用パネル（背景なし）
                     coin_stack
@@ -783,6 +783,7 @@ def main_game(page: ft.Page):
 def main(page: ft.Page):
     # ウィンドウサイズを固定設定　デスクトップアプリとして起動した場合のみに適応される。
     #
+    '''
     page.window_width = 1920
     page.window_height = 1080
     page.window_resizable = False
@@ -790,7 +791,7 @@ def main(page: ft.Page):
     page.window_min_height = 1080
     page.window_max_width = 1920
     page.window_max_height = 1080
-
+    '''
     home_view(page)
-    page.bgcolor = ft.Colors.ORANGE_100
+    page.bgcolor = ft.colors.ORANGE_100
 ft.app(target=main, assets_dir="assets")

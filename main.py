@@ -49,6 +49,19 @@ def is_orders_matching(customer_order, processed_orders) -> bool:
             return False
     return True
 
+def play_bgm(filename: str):
+    # assets/sounds フォルダ内のBGMファイルをループ再生
+    bgm_path = os.path.join("assets", "sounds", filename)
+    try:
+        bgm = pygame.mixer.Sound(bgm_path)
+        bgm.set_volume(0.1)
+        bgm.play(loops=-1)  # ループ再生
+    except Exception as ex:
+        print(f"Error playing BGM: {ex}")
+
+def stop_bgm():
+    pygame.mixer.stop()
+
 def play_sound(filename: str):
     # assets/sounds フォルダ内のサウンドファイルを再生
     sound_path = os.path.join("assets", "sounds", filename)
@@ -105,6 +118,8 @@ def simulate_payment(order_sum: int):
 # --------------------
 # ホーム画面
 def home_view(page: ft.Page):
+    stop_bgm()
+    play_bgm("bgm1.mp3")
     page.views.clear()
     
     background = ft.Image(
@@ -182,6 +197,8 @@ def ranking_view(page: ft.Page):
 # --------------------
 # ゲーム画面（既存UI・処理そのまま）
 def main_game(page: ft.Page):
+    stop_bgm()
+    play_bgm("bgm2.mp3")
 
     play_sound("click2.mp3")
     page.title = "レジ打ちゲーム"
@@ -617,6 +634,8 @@ def main_game(page: ft.Page):
         nonlocal numeric_input
         numeric_input = 0
         numeric_display.value = f"{numeric_input} 円"
+        coin_stack_controls.clear()
+        update_coin_stack()
         play_sound("click.mp3")
         page.update()
 
@@ -830,7 +849,6 @@ def main_game(page: ft.Page):
 # エントリーポイント（起動時はホーム画面を表示）
 def main(page: ft.Page):
     # ウィンドウサイズを固定設定　デスクトップアプリとして起動した場合のみに適応される。
-    #
     page.window_width = 1280
     page.window_height = 720
     page.window_resizable = True
@@ -838,7 +856,10 @@ def main(page: ft.Page):
     page.window_min_height = 600
     page.scroll = "auto"
 
+    # BGMを再生
+    play_bgm("background_music.mp3")
 
     home_view(page)
     page.bgcolor = ft.Colors.ORANGE_100
+
 ft.app(target=main, assets_dir="assets")

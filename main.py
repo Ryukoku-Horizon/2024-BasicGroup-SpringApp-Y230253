@@ -845,6 +845,12 @@ def main_game(page: ft.Page):
     page.views.append(main_view)
     page.go("/")
 
+import sys
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
 # --------------------
 # エントリーポイント（起動時はホーム画面を表示）
 def main(page: ft.Page):
@@ -855,11 +861,13 @@ def main(page: ft.Page):
     page.window_min_width = 800
     page.window_min_height = 600
     page.scroll = "auto"
-
+    page.title = "レジ打ちゲーム"
+    page.window.icon = resource_path("icon.ico")
     # BGMを再生
     play_bgm("background_music.mp3")
 
     home_view(page)
     page.bgcolor = ft.Colors.ORANGE_100
+
 
 ft.app(target=main, assets_dir="assets")

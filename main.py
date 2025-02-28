@@ -855,8 +855,8 @@ def resource_path(relative_path):
 # エントリーポイント（起動時はホーム画面を表示）
 def main(page: ft.Page):
     # ウィンドウサイズを固定設定　デスクトップアプリとして起動した場合のみに適応される。
-    page.window_width = 1280
-    page.window_height = 720
+    page.window_width = 1920
+    page.window_height = 1080
     page.window_resizable = True
     page.window_min_width = 800
     page.window_min_height = 600
